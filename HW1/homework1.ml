@@ -51,8 +51,11 @@ let rec is_coprime (a,b) =
 
 
 let rec euler (n) = 
-   
-   failwith "not implemented"
+   i = 2
+   if something then
+      this
+   else
+      is_coprime (i, n) + euler (n - 1)
 
 
 let coprimes (n) = 
