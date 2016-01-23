@@ -2,9 +2,9 @@
 
 HOMEWORK 1
 
-Name: 
+Name: Philip Seger
 
-Email:
+Email: philip.seger@students.olin.edu
 
 Remarks, if any:
 
@@ -27,8 +27,17 @@ Remarks, if any:
 
 (* Question 1 *)
 
-let gcd (a,b) = 
-   failwith "not implemented"
+let rec gcd (a,b) = 
+   if a = 0 || b = 0 then
+      if a = 0 then
+         b
+      else
+         a
+   else
+      if a >= b then
+         gcd ((a - b), b)
+      else
+         gcd (a, (b - a))
 
 
 let is_coprime (a,b) = 
