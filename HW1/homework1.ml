@@ -6,7 +6,10 @@ Name: Philip Seger
 
 Email: philip.seger@students.olin.edu
 
-Remarks, if any:
+Remarks, if any: 
+   With 1,b, the simplest solution uses the previous problem's
+   answer. Is this acceptable, or should the answers all be
+   standalone from each other?
 
 *)
 
@@ -41,19 +44,14 @@ let rec gcd (a,b) =
 
 
 let rec is_coprime (a,b) = 
-   if a = 0 || b = 0 then
-      if a = 1 || b = 1 then
-         true
-      else
-         false
+   if gcd (a, b) = 1 then
+      true
    else
-      if a >= b then
-         is_coprime (a - b, b)
-      else
-         is_coprime (a, b - a)
+      false
 
 
-let euler (n) = 
+let rec euler (n) = 
+   
    failwith "not implemented"
 
 
