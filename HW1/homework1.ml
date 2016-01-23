@@ -35,13 +35,22 @@ let rec gcd (a,b) =
          a
    else
       if a >= b then
-         gcd ((a - b), b)
+         gcd (a - b, b)
       else
-         gcd (a, (b - a))
+         gcd (a, b - a)
 
 
-let is_coprime (a,b) = 
-   failwith "not implemented"
+let rec is_coprime (a,b) = 
+   if a = 0 || b = 0 then
+      if a = 1 || b = 1 then
+         true
+      else
+         false
+   else
+      if a >= b then
+         is_coprime (a - b, b)
+      else
+         is_coprime (a, b - a)
 
 
 let euler (n) = 
