@@ -51,11 +51,8 @@ let rec is_coprime (a,b) =
 
 
 let rec euler (n) = 
-   i = 2
-   if something then
-      this
-   else
-      is_coprime (i, n) + euler (n - 1)
+   (* idea: is_coprime (n, n-1) + euler(n - 1) *)
+   failwith "not implemented"
 
 
 let coprimes (n) = 
@@ -65,8 +62,9 @@ let coprimes (n) =
 
 (* Question 2 *)
 
-let append (xs,ys) = 
-   failwith "not implemented"
+let rec append (xs,ys) =
+   match xs with [] -> []
+            | fst::lst -> fst
 
 
 let flatten (xss) = 
