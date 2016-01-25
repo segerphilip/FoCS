@@ -52,6 +52,11 @@ let rec is_coprime (a,b) =
 
 let rec euler (n) = 
    (* idea: is_coprime (n, n-1) + euler(n - 1) *)
+   (* if n = 1 then
+      is_coprime(1, 1)
+   else
+      if is_coprime(n, n - 1) = true
+         euler(n - 1) *)
    failwith "not implemented"
 
 
@@ -64,8 +69,14 @@ let coprimes (n) =
 
 let rec append (xs,ys) =
    match xs with [] -> []
-            | fst::lst -> fst
+            |    fxs::rxs -> fxs::append (rxs, ys)
+            |    fxs::[] ->
+            match ys with [] -> []
+                     |    fys::rys -> fys::append (fxs, rys)
+(* PROBABLY WRONG *)
 
+
+let rec ziplist (l1, l2) =
 
 let flatten (xss) = 
    failwith "not implemented"
