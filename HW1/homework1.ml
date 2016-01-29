@@ -50,14 +50,20 @@ let rec is_coprime (a,b) =
       false
 
 
-let rec euler (n) = 
-   (* idea: is_coprime (n, n-1) + euler(n - 1) *)
-   (* if n = 1 then
-      is_coprime(1, 1)
+(* Helper function to compute euler *)
+(* let rec euler_helper (x, n) =
+   if x > n then
+      some return
    else
-      if is_coprime(n, n - 1) = true
-         euler(n - 1) *)
-   failwith "not implemented"
+      if is_coprime (x, n) then
+         euler_helper(x + 1, n)
+      else
+         euler_helper(x, n) *)
+(* EULER WITHOUT HELPER *)
+
+
+let euler (n) = 
+    euler_helper(1, n)
 
 
 let coprimes (n) = 
@@ -68,25 +74,21 @@ let coprimes (n) =
 (* Question 2 *)
 
 let rec append (xs,ys) =
-   match xs with [] -> []
-            |    fxs::rxs -> fxs::append (rxs, ys)
-            |    fxs::[] ->
-            match ys with [] -> []
-                     |    fys::rys -> fys::append (fxs, rys)
-(* PROBABLY WRONG *)
+   match xs with [] -> ys               (*wrong*)
+            |    fst::rst -> append (rst,fst::ys)
 
-
-let rec ziplist (l1, l2) =
 
 let flatten (xss) = 
-   failwith "not implemented"
-
-
-let nth (n,xs) = 
+   match xss with [] -> xss
+               | fst::rst -> flatten (rst)
    failwith "not implemented"
 
 
 let last (xs) = 
+   failwith "not implemented"
+
+
+let nth (n,xs) = 
    failwith "not implemented"
 
 
@@ -98,7 +100,11 @@ let separate (xs) =
 (* Question 3 *)
 
 let setIn (e,xs) = 
-   failwith "not implemented"
+   match xs with [] -> false
+               | fst::rst -> if fst = e then
+                    true
+                else
+                    setIn(e,rst)
 
 
 let setSub (xs,ys) = 
