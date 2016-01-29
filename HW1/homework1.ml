@@ -7,9 +7,6 @@ Name: Philip Seger
 Email: philip.seger@students.olin.edu
 
 Remarks, if any: 
-   With 1,b, the simplest solution uses the previous problem's
-   answer. Is this acceptable, or should the answers all be
-   standalone from each other?
 
 *)
 
@@ -50,20 +47,18 @@ let rec is_coprime (a,b) =
       false
 
 
-(* Helper function to compute euler *)
-(* let rec euler_helper (x, n) =
+let rec euler_helper (n, x, score) = 
    if x > n then
-      some return
+      score
    else
-      if is_coprime (x, n) then
-         euler_helper(x + 1, n)
+      if is_coprime(x, n) = true then
+         euler_helper(n, x + 1, score + 1)
       else
-         euler_helper(x, n) *)
-(* EULER WITHOUT HELPER *)
+         euler_helper(n, x + 1, score)
 
 
 let euler (n) = 
-    euler_helper(1, n)
+    euler_helper(n, 1, 0)
 
 
 let coprimes (n) = 
@@ -74,14 +69,22 @@ let coprimes (n) =
 (* Question 2 *)
 
 let rec append (xs,ys) =
-   match xs with [] -> ys               (*wrong*)
-            |    fst::rst -> append (rst,fst::ys)
+   match xs with [] -> append ([], ys)
+            | fst1::[] -> append ()
+            | fst1::rst1 -> 
 
 
-let flatten (xss) = 
+let rec ziplist (l1, l2) =
+  match l1 with [] -> [] 
+            |   fl1::rl1 -> 
+            match l2 with [] -> []
+                      |   fl2::rl2 -> fl1::fl2::ziplist(rl1, rl2)
+
+
+(* let flatten (xss) = 
    match xss with [] -> xss
                | fst::rst -> flatten (rst)
-   failwith "not implemented"
+   failwith "not implemented" *)
 
 
 let last (xs) = 
@@ -99,12 +102,12 @@ let separate (xs) =
 
 (* Question 3 *)
 
-let setIn (e,xs) = 
+(* let setIn (e,xs) = 
    match xs with [] -> false
                | fst::rst -> if fst = e then
                     true
                 else
-                    setIn(e,rst)
+                    setIn(e,rst) *)
 
 
 let setSub (xs,ys) = 
