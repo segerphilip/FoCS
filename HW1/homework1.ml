@@ -51,48 +51,56 @@ let rec euler_helper (n, x, score) =
    if x > n then
       score
    else
-      if is_coprime(x, n) = true then
-         euler_helper(n, x + 1, score + 1)
+      if is_coprime (x, n) = true then
+         euler_helper (n, x + 1, score + 1)
       else
-         euler_helper(n, x + 1, score)
+         euler_helper (n, x + 1, score)
 
 
 let euler (n) = 
-    euler_helper(n, 1, 0)
+    euler_helper (n, 1, 0)
+
+
+let rec coprimes_helper (n, x, coprms) =
+   if x = 0 then
+      coprms
+   else 
+      if is_coprime (x, n) then
+         coprimes_helper (n, x - 1, x::coprms)
+      else
+         coprimes_helper (n, x - 1, coprms)
 
 
 let coprimes (n) = 
-   failwith "not implemented"
-
+   coprimes_helper (n, n, [])
 
 
 (* Question 2 *)
 
 let rec append (xs,ys) =
-   match xs with [] -> append ([], ys)
-            | fst1::[] -> append ()
-            | fst1::rst1 -> 
+   match xs with [] -> ys
+            | fst::rst -> fst::append (rst, ys)
 
 
-let rec ziplist (l1, l2) =
-  match l1 with [] -> [] 
-            |   fl1::rl1 -> 
-            match l2 with [] -> []
-                      |   fl2::rl2 -> fl1::fl2::ziplist(rl1, rl2)
+let rec flatten (xss) = 
+   match xss with [] -> []
+               | fst::rst -> append (fst, flatten (rst))
 
 
-(* let flatten (xss) = 
-   match xss with [] -> xss
-               | fst::rst -> flatten (rst)
-   failwith "not implemented" *)
+let rec last (xs) = 
+   match xs with [] -> failwith "empty list"
+               | fst::rst -> if rst = [] then
+                  fst
+               else
+                  last (rst)
 
 
-let last (xs) = 
-   failwith "not implemented"
-
-
-let nth (n,xs) = 
-   failwith "not implemented"
+let rec nth (n,xs) = 
+   match xs with [] -> failwith "out of bounds"
+               | fst::rst -> if n = 0 then
+                  fst
+               else
+                  nth (n - 1, rst)
 
 
 let separate (xs) = 
