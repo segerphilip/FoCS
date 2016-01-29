@@ -103,37 +103,74 @@ let rec nth (n,xs) =
                   nth (n - 1, rst)
 
 
-let separate (xs) = 
-   failwith "not implemented"
-
+let rec separate (xs) = 
+(*    match xs with [] -> ([],[])
+               | fst::rst ->  *)
+               (* WTS: return -> x1::x2, y1::y2
+                     not sure how to proceed *)
+   failwith "tried to implement"
 
 
 (* Question 3 *)
 
-(* let setIn (e,xs) = 
+let rec setIn (e,xs) = 
    match xs with [] -> false
                | fst::rst -> if fst = e then
                     true
                 else
-                    setIn(e,rst) *)
+                    setIn (e,rst)
 
 
-let setSub (xs,ys) = 
-   failwith "not implemented"
+let rec setSub (xs,ys) = 
+   match xs with [] -> true
+               | fst::rst -> 
+               if setIn (fst, ys) then
+                  setSub (rst, ys)
+               else
+                  false
 
 
 let setEqual (xs,ys) = 
-   failwith "not implemented"
+   if setSub (xs, ys) && setSub (ys, xs) then
+      true
+   else
+      false
+
+
+let rec setUnion_helper (xs, ys, union) =
+   match xs with [] -> append (ys, union)
+               | fst::rst -> 
+               if setIn (fst, union) then
+                  setUnion_helper (rst, ys, union)
+               else
+                  setUnion_helper (rst, ys, fst::union)
 
 
 let setUnion (xs,ys) = 
-   failwith "not implemented"
+   setUnion_helper (xs, ys, [])
+
+
+let rec setInter_helper (xs, ys, inter) = 
+   match xs with [] -> inter
+               | fst::rst -> 
+               if setIn (fst, ys) then
+                  setInter_helper (rst, ys, fst::inter)
+               else
+                  setInter_helper (rst, ys, inter)
 
 
 let setInter (xs,ys) = 
-   failwith "not implemented"
+   setInter_helper (xs, ys, [])
 
+
+let rec setSize_helper (xs, n, total) =
+   match xs with [] -> total
+               | fst::rst -> 
+               if setIn (fst, n) then
+                  setSize_helper (rst, n, total)
+               else
+                  setSize_helper (rst, fst::n, total + 1)
 
 let setSize (xs) = 
-   failwith "not implemented"
+   setSize_helper (xs, [], 0)
 
