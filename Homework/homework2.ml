@@ -28,13 +28,21 @@ Remarks, if any:
 (* QUESTION 1 *)
 
 
-let prepend (letter, lang) = failwith "not implemented"
+let rec prepend (letter, lang) = 
+  match lang with [] -> lang
+                | fst::rst -> (letter ^ fst) :: prepend (letter, rst)
 
 
-let concatenate (alphabet, lang) = failwith "not implemented"
+let  rec concatenate (alphabet, lang) = 
+  match alphabet with [] -> []
+                    | fst::rst -> prepend (fst, lang) @ concatenate (rst, lang)
 
 
-let all_strings (alphabet, n) = failwith "not implemented"
+let rec all_strings (alphabet, n) =
+  if n = 0 then
+    [""]
+  else
+    "" :: concatenate (alphabet, all_strings (alphabet, n - 1))
 
 
 
