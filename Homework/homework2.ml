@@ -48,16 +48,28 @@ let rec all_strings (alphabet, n) =
 
 (* QUESTION 2 *)
 
-let restrict (xs,n) = failwith "not implemented"
+let rec restrict (xs,n) = 
+  match xs with [] -> []
+              | fst::rst -> if String.length fst <= n then
+                fst::restrict (rst, n)
+              else
+                restrict (rst, n)
 
 
-let langUnion (xs,ys,n) = failwith "not implemented"
+let langUnion (xs,ys,n) =
+  restrict (xs, n) @ restrict (ys, n)
 
 
-let langConcat (xs,ys,n) = failwith "not implemented"
+(* let rec langConcat_helper (ls, n) =
+  restrict (ls, n) *)
 
 
-let langStar (xs,n) = failwith "not implemented"
+let langConcat (xs,ys,n) =
+  restrict (concatenate (xs, ys), n)
+
+
+let langStar (xs,n) =
+  all_strings (xs, n)
 
 
 
