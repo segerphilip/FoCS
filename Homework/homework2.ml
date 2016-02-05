@@ -179,12 +179,14 @@ let dump l =
 
 (* Placeholder for your regular expression. Replace "0" by your actual answer *)
 
-let regexp_a = "0"
+let regexp_a = "(a+b)(a+b)(a+b)"
 
-let regexp_b = "0"
+let regexp_b = "((a+b)(a+b)(a+b))*"
 
-let regexp_c = "0"
+let regexp_c = "b*ab*"
 
-let regexp_d = "0"
-
-let regexp_e = "0"
+(* not sure about these last two, I kept getting stack overflow errors *)
+(* this is wrong *)
+let regexp_d = "(b*ab*)*"
+(* this is also wrong *)
+let regexp_e = "(ba)*+a*(ba)*"
