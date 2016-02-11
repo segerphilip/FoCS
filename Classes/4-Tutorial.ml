@@ -86,15 +86,34 @@ let create_mkPair2 y x = (y, x)
 (* with that idea, we can simplify a lot *)
 let add x y = x + y  (* but don't use parenthesis around x y *)
 let incr = add 1     (* when written as let fun x y -> curried function *)
+(* can be called as add 1 3;; or (add 1) 3;; *)
 
 
+(* 
+Code the following functions by direct recursion
+
+removeEmpty: 'a list list -> 'a list list     removeEmpty [[1;2;3];[];3] = [[1;2];[3]] 
+
+filter : ('a -> bool) -> 'a list -> 'a list   filter odd [1;2;3;4;5;6] = [1;3;5]
+*)
+
+let rec removeEmpty xs = 
+  match xs with [] -> []
+              | fst::rst -> if List.length fst > 0 then
+                              fst :: removeEmpty (rst)
+                            else
+                              removeEmpty (rst)
 
 
+let odd n = (n mod 2 = 1)
 
-
-
-
-
+let rec filter p xs = 
+  match xs with [] -> []
+              | fst::rst -> if (p fst) then 
+                              fst :: filter p rst
+                            else
+                              filter p rst
+(* only thing with ^ to be aware of, watch parentheses, they can break everything *)
 
 
 
