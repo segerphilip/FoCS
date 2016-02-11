@@ -2,9 +2,9 @@
 
 HOMEWORK 3
 
-Name: 
+Name: Philip Seger
 
-Email:
+Email: philip.seger@students.olin.edu
 
 Remarks, if any:
 
