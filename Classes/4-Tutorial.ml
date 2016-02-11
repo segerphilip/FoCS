@@ -166,3 +166,7 @@ let rec general comb xs base =
               | fst::rst -> comb fst (general comb rst base)
 (* ^^^ LITERALLY the most general of all cases *)
 (* e.x. general (fun x y -> (x + 1)::y) [1;2;3;4] [];; *)
+
+
+(* for the functions in List, use *)
+(* List,map, List.filter, List.fold_right *)
