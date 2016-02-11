@@ -115,18 +115,54 @@ let rec filter p xs =
                               filter p rst
 (* only thing with ^ to be aware of, watch parentheses, they can break everything *)
 
+let rec map_append f xs =   (* takes 1 after other arguments, takes ('a -> b' list) -> 'a list -> 'b list  *)
+  match xs with [] -> []
+              | fst::rst -> (f fst) @ (map_append f rst)
+(* example: map_append (fun x -> [x;x+1;x+2]) [10;20;30];; *)
 
+(* 
+Code with map_append
+  flatten : 'a list list -> 'a list       flatten [[1;2];[];[3]] = [1;2;3]
 
+  filter : ('a -> bool) -> 'a list -> 'a list   filter odd [1;2;3;4] = [1;3]
+*)
 
+let flatten2 xs =
+  map_append (fun x -> x) xs
 
+let filter2 p xs =
+  map_append (fun x -> if p x then [x] else []) xs
 
+(* First map used ::, map_append used @, map_general1 uses comb function *)
+let rec map_general1 comb f xs = 
+  match xs with [] -> []
+              | fst::rst -> comb (f fst) (map_general1 comb f rst)
+(* V same as before, just now using map_general1 *)
+let map2 f xs = map_general1 (fun x y -> x::y) f xs
+let map_append2 f xs = map_general1 (fun x y -> x@y) f xs
 
+(* Even better V *)
+let rec map_general comb xs = 
+  match xs with [] -> []
+              | fst::rst -> comb fst (map_general comb rst)
+(* V same as before, now using better map_general *)
+let map3 f xs = map_general (fun x y -> (f x) :: y) xs
+let map_append3 f xs = map_general (fun x y -> (f x) @ y) xs
 
+(* map_general can't deal with: *)
+let rec sum xs =
+  match xs with [] -> 0   (* map_general returns the list, doesn't work with sum *)
+              | fst::rst -> fst + sum (rst)
+(* we can make it (sum) better *)
+let rec sum_general comb xs =
+  match xs with [] -> 0
+              | fst::rst -> comb fst (sum_general comb rst)
 
+(* well why don't we make the base case a parameter!!! *)
 
-
-
-
-
-
-
+(* legit name is    **fold_right**   *)
+let rec general comb xs base = 
+  match xs with [] -> base
+              | fst::rst -> comb fst (general comb rst base)
+(* ^^^ LITERALLY the most general of all cases *)
+(* e.x. general (fun x y -> (x + 1)::y) [1;2;3;4] [];; *)
