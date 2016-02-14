@@ -76,24 +76,59 @@ type 'a fa = { states: 'a list;
 
 (* QUESTION 1 *)
 
-
-let findTransitions (fa,q,a) = failwith "findTransitions not implemented"
-
-
-let isAccepting (fa,s) = failwith "isAcception not implemented"
-
-
-let step (fa,q,a) = failwith "step not implemented"
+let rec findTransitionsHelper (delta, q, a) =
+  match delta with [] -> []
+                    | (x, y, z)::rst -> if x = q && y = a then 
+                      (x, y, z) :: findTransitionsHelper(rst, q, a)
+                    else
+                      findTransitionsHelper(rst, q, a)
 
 
-let steps (fa,q,syms) = failwith "steps not implemented"
+let findTransitions (fa,q,a) = 
+  findTransitionsHelper (fa.delta, q, a)
 
 
-let isDFA (fa) = failwith "isDFA not implemented"
+let rec isAcceptingHelper (accepting, s) =
+  match accepting with [] -> false
+                     | fst::rst -> if fst = s then
+                       true
+                     else
+                       isAcceptingHelper(rst, s) 
 
 
-let acceptDFA (fa,input) = failwith "acceptDFA not implemented"
+let isAccepting (fa,s) = 
+  isAcceptingHelper(fa.accepting, s)
 
+
+let step (fa,q,a) = 
+  match findTransitions(fa, q, a) with [] -> failwith "Does not exist"
+                                          | [(x, y, z)] -> z
+                                          | fst::rst -> failwith "Not deterministic"
+
+
+let rec steps (fa,q,syms) = 
+  match syms with [] -> q
+                | fst::rst -> steps(fa, step(fa, q, fst), rst)
+
+
+let rec isDFAHelper (fa, states, alphabet, a) =
+  match states with [] -> true
+                  | fst::rst -> match alphabet with [] -> isDFAHelper(fa, rst, a, a)
+                                                  | fstt::rstt -> if List.length(findTransitions(fa, fst, fstt)) != 1 then
+                                                    false
+                                                  else
+                                                    isDFAHelper(fa, [fst]@rst, rstt, a)               
+
+
+let isDFA (fa) = 
+  isDFAHelper(fa, fa.states, fa.alphabet, fa.alphabet)
+
+
+let acceptDFA (fa,input) = 
+  if isDFA (fa) then
+    isAccepting(fa, steps(fa, fa.start, explode(input)))
+  else
+    failwith "Not deterministic"
 
 
 
@@ -104,30 +139,83 @@ let acceptDFA (fa,input) = failwith "acceptDFA not implemented"
 (* REPLACE BY YOUR OWN DEFINITIONS *)
 
 
-let dfa_q2_a = { states = [0];
-		 alphabet = ['a'];
-		 delta = [ ];
+let dfa_q2_a = { states = [0; 1; 2; 3];
+		 alphabet = ['a'; 'b'];
+		 delta = [(0, 'a', 0);
+              (0, 'b', 1);
+              (1, 'a', 0);
+              (1, 'b', 2);
+              (2, 'a', 0);
+              (2, 'b', 3);
+              (3, 'a', 3);
+              (3, 'b', 3);
+              ];
 		 start = 0;
-		 accepting = []}
+		 accepting = [0; 1; 2]}
 
 
-let dfa_q2_b = { states = [0];
-		 alphabet = ['a'];
-		 delta = [ ];
+let dfa_q2_b = { states = [0; 1; 2; 3; 4; 5; 6; 7];
+		 alphabet = ['a'; 'b'];
+		 delta = [(0, 'a', 1);
+              (0, 'b', 4);
+              (1, 'a', 2);
+              (1, 'b', 4);
+              (2, 'a', 3);
+              (2, 'b', 4);
+              (3, 'a', 7);
+              (3, 'b', 4);
+              (4, 'a', 1);
+              (4, 'b', 5);
+              (5, 'a', 1);
+              (5, 'b', 6);
+              (6, 'a', 1);
+              (6, 'b', 7);
+              (7, 'a', 7);
+              (7, 'b', 7);
+              ];
 		 start = 0;
-		 accepting = []}
+		 accepting = [0; 1; 2; 3; 4; 5; 6]}
 
 
-let dfa_q2_c = { states = [0];
-		 alphabet = ['a'];
-		 delta = [ ];
+let dfa_q2_c = { states = [0; 1; 2; 3; 4; 5; 6; 7];
+		 alphabet = ['a'; 'b'];
+		 delta = [(0, 'a', 1);
+              (0, 'b', 4);
+              (1, 'a', 2);
+              (1, 'b', 7);
+              (2, 'a', 3);
+              (2, 'b', 7);
+              (3, 'a', 3);
+              (3, 'b', 4);
+              (4, 'a', 7);
+              (4, 'b', 5);
+              (5, 'a', 7);
+              (5, 'b', 6);
+              (6, 'a', 1);
+              (6, 'b', 6);
+              (7, 'a', 7);
+              (7, 'b', 7);
+              ];
 		 start = 0;
-		 accepting = []}
+		 accepting = [3; 6]}
 
 
-let nfa_q2_d = { states = [0];
-		 alphabet = ['a'];
-		 delta = [ ];
+(* NOT FULLY IMPLEMENTED, come back and fix *)
+let nfa_q2_d = { states = [0; 1; 2; 3; 4; 5];
+		 alphabet = ['a'; 'b'];
+		 delta = [(0, 'a', )
+              (0, 'b', )
+              (1, 'a', )
+              (1, 'b', )
+              (2, 'a', )
+              (2, 'b', )
+              (3, 'a', )
+              (3, 'b', )
+              (4, 'a', )
+              (4, 'b', )
+              (5, 'a', )
+              (5, 'b', )
+              ];
 		 start = 0;
 		 accepting = []}
 
@@ -137,7 +225,7 @@ let nfa_q2_d = { states = [0];
 (* QUESTION 3 *)
 
 
-let keepTarget (trs) = failwith "keepTarget not implemented"
+let rec keepTarget (trs) = failwith "keepTarget not implemented"
 
 
 let isAcceptingAny (fa,qs) = failwith "isAcceptingAny not implemented"
