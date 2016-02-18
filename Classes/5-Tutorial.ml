@@ -76,33 +76,26 @@ Example3:
 Difference between TA and FA is that stuff is written on the tape and you can overwrite it
 *)
 
+(* 
+A Turing Machine is a tuple... notes on #4 moleskin
+  M = (states, input alphabet, tape alphabet, transition function, start, accept, reject, leftmost marker, blank symbol)
 
+At any point in time a TM can be described by:
+  - the state (province, lol) it is in        }
+  - the content of the tape                     } - a configuration
+  - the position of the tape head             }
 
+A configuration of a TM is a triple (q, u, v)
+        q - current state
+        u - content of tape before tapehead
+        v - content of tape after and including tapehead
 
+A starting configuration for input w (which is an input string)
+  is a configuration of the form (s, E, ¬ w)
+                        (start state, empty, leftmost marker and input string)
+An accepting configuration is a configuration of the form (acc, u, v) for some u,v
+A rejecting configuration is a configuration of the form (rej, u, v) for some u,v
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+The "step" function -> 
+  check moleskin #5
+*)
