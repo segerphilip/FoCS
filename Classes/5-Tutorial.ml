@@ -61,7 +61,20 @@ Example1:
       any transition not given in the diagram goes to the reject state
 real drawing of ^^^ in moleskin at #1
 
- *)
+Example2:
+  real drawing in moleskin at #2
+    Give a TM that accepts all strings over {a,b} that end with two a's
+      REMEMBER: you can move both right and left on the tape, going to the end is possible
+
+Example3:
+  real drawing in moleskin at #3
+    TM that accepts strings over {a,b} of the form:
+      a^n b^n for any n
+        1) make sure the tape has a's followed by b's (aaabb...)
+        2) make passes left to right Xing out one a and one b everytime
+
+Difference between TA and FA is that stuff is written on the tape and you can overwrite it
+*)
 
 
 
