@@ -225,19 +225,26 @@ let nfa_q2_d = { states = [0; 1; 2; 3; 4; 5];
 (* QUESTION 3 *)
 
 
-let rec keepTarget (trs) = failwith "keepTarget not implemented"
+let rec keepTarget (trs) = 
+  List.sort_uniq compare (List.rev_map (fun (x, y, z) -> z) trs)
 
 
-let isAcceptingAny (fa,qs) = failwith "isAcceptingAny not implemented"
+let isAcceptingAny (fa,qs) = 
+  List.exists (fun x -> isAccepting(fa, x)) qs
 
 
-let rec stepAll (fa,qs,a) = failwith "stepAll not implemented"
+let rec stepAll (fa,qs,a) = 
+  match qs with [] -> []
+              | fst::rst -> keepTarget(findTransitions(fa, fst, a)) @ stepAll(fa, rst, a)
 
 
-let rec stepsAll (fa,qs,syms) = failwith "stepsAll not implemented"
+let rec stepsAll (fa,qs,syms) = 
+  match qs with [] -> qs
+              | fst::rst -> stepsAll(fa, stepAll(fa, qs, fst), rst)
 
 
-let acceptNFA (fa,input) = failwith "acceptNFA not implemented"
+let acceptNFA (fa,input) = 
+  isAcceptingAny(fa, stepsAll(fa, [fa.start], explode(input)))
 
 
 

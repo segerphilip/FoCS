@@ -2,9 +2,9 @@
 
 HOMEWORK 4
 
-Name: 
+Name: Philip Seger
 
-Email:
+Email: philip.seger@students.olin.edu
 
 Remarks, if any:
 
@@ -90,14 +90,16 @@ let dfaThreeA = {
 (* QUESTION 1 *)
 
 
-let isAccepting dfa s = failwith "isAccepting not implemented"
+let isAccepting dfa s = 
+  List.fold_right (fun x y -> x = s) dfa.accepting false
 
 
-let steps dfa q syms = failwith "steps not implemented"
+let steps dfa q syms = 
+  List.fold_right (fun x y -> (dfa.delta y x)) syms q
 
 
-let acceptDFA dfa input = failwith "acceptDFA not implemented"
-
+let acceptDFA dfa input = 
+  isAccepting dfa (steps dfa dfa.start (explode input))
 
 
 (* This function loops through all the strings
@@ -149,19 +151,24 @@ let langDFA dfa n =
 (* QUESTION 2 *)
 
 
-let max_positive xs =  failwith "max_positive not implemented"
+let at_least n p xs =  
+  List.length(List.filter p xs) >= n
 
 
-let at_least n p xs =  failwith "at_least not implemented"
+let max_positive xs =  
+  List.fold_right(fun x max -> if (x > max && x > 0) then x else max) xs 0
 
 
-let map_funs fs x =  failwith "map_funs not implemented"
+let map_funs fs x =  
+  List.map(fun f -> f x) fs
 
 
-let map_cross fs xs =  failwith "map_cross not implemented"
+let map_cross fs xs =  
+  List.fold_right(fun x res -> map_funs fs x @ res) xs []
 
 
-let all_pairings xs ys =  failwith "all_pairings not implemented"
+let all_pairings xs ys =  
+  List.fold_right(fun x res -> (List.map(fun y -> (x, y)) ys) @ res) xs []
 
 
 
@@ -170,14 +177,19 @@ let all_pairings xs ys =  failwith "all_pairings not implemented"
 (* QUESTION 3 *)
 
 
-let prefixes xs =  failwith "prefixes not implemented"
+let prefixes xs =  
+  List.fold_right(fun x res -> [] :: List.map(fun y -> x :: y) res) xs [[]]
 
 
-let suffixes xs =  failwith "suffixes not implemented"
+let suffixes xs =  
+  List.fold_right(fun x res -> (x :: List.hd res) :: res) xs [[]]
 
 
-let inject a xs =  failwith "inject not implemented"
+(* map2 works, but I also tried with combine, but couldn't get it working *)
+let inject a xs =  
+  List.map2(fun x y -> x @ [a] @ y) (prefixes xs) (suffixes xs)
 
 
 let permutations xs =  failwith "permutations not implemented"
+  (* List.fold_right(fun x res -> (* prefix and suffix something *)) xs [[]] *)
 
