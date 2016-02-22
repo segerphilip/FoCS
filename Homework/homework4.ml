@@ -190,6 +190,7 @@ let inject a xs =
   List.map2(fun x y -> x @ [a] @ y) (prefixes xs) (suffixes xs)
 
 
-let permutations xs =  failwith "permutations not implemented"
+let permutations xs =  
+  List.fold_right(fun x res -> (List.fold_right (@) (List.map(fun y -> inject x y) res) [])) xs [[]]
   (* List.fold_right(fun x res -> (* prefix and suffix something *)) xs [[]] *)
 
