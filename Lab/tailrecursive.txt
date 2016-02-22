@@ -1,0 +1,44 @@
+extra notes on 1 in moleskine
+
+NOT tail recursive (done in python pseudo code)
+
+def factorial(n):
+  if n = 1: 
+    return 1
+  else:
+    return n * factorial(n - 1)
+
+e.g.
+  fact(5)
+    5 * fact(4)
+      4 * fact(3)
+        3 * fact(2)
+          2 * fact(1)
+            1
+5 levels is fine, but larger recursion gets memory heavy
+
+
+tail recursive (done in python pseudo code)
+
+def factorial(n, acc (__which = 1 by default__) ):
+  if n = 1:
+    return acc
+  else:
+    return factorial(n - 1, n * acc)
+
+e.g.
+  fact(5,1)
+  fact(4,5)
+  fact(3,20)
+  fact(2,60)
+  fact(1,120)
+  120
+
+kind of what fold_left does, (acc)umulator is the return
+
+in fold_right, match [] with basecase
+                  head::tail and do some function here
+
+fold_left does similar, but accumulates in place and you don't have to add head back to tail
+
+using a map function or similar will reverse the expected output
