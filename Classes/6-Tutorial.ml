@@ -23,3 +23,24 @@ Def:
 Check notebook @ 2
 
 *)
+
+(* 
+Consider a new TM I:
+  on input x:
+    1 - rewrite x into <Mx>#x
+    2 - simulates K on <Mx>#x (<- this input)
+          accept if K rejects, go into infinite loop if K accepts
+
+I is a Turing Machine.
+We can ask if I halts on any given input.
+  Does I halt on input <I>?
+    Yes? - When K rejects <I>#<I>
+          When I does not halt on <I>. WTF?!?
+    No?  - When I does not halt on <I> 
+          then K accepts <I>#<I>
+          then I halts on <I>       WTF?!?
+
+ 
+
+
+*)
