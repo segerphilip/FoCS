@@ -79,7 +79,7 @@ let coprimes (n) =
 
 let rec append (xs,ys) =
    match xs with [] -> ys
-            | fst::rst -> fst::append (rst, ys)
+               | fst::rst -> fst::append (rst, ys)
 
 
 let rec flatten (xss) = 
