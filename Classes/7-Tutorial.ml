@@ -129,4 +129,8 @@ A1
   -> a b |q_acc| q_acc
   -> a b |q_acc|
   -> a b
+
+A language A is grammar-decidable if there exists a grammar G s.t. L(G) = A.
+A is grammar-decidable exactly when A is Turing-decidable.
 *)
+
