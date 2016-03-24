@@ -58,25 +58,75 @@ Claim:
 
   -A is described by a regular expression
   -A is accepted by some DFA
+
+Some cray example: 
+  {a^n b^n c^n | n >= 0}
+
+Rules:
+S -> A B C
+B -> X B' B X
+B -> e
+B' X -> X B'
+A -> A A
+A -> e
+C -> C C
+C -> e
+
+A X -> A'
+A' X -> X A'
+X C -> C'
+X C' -> C' X              <- unavoidable to not use complex left side rules 
+A' -> a                                              (5 in this example)
+B' -> b
+C' -> c
+
+e.g.
+S -> A |B| C
+  -> A X B' |B| X C
+  -> A X B' X B' |B| X X C
+  -> A X |B' X| B' X X C
+  -> |A| X X B' B' X X C
+  -> A |A X| X B' B' X X C
+  -> A A' X B' B' X X C
+  -> |A X| A' B' B' X X C
+  -> A' A' B' B' X X C
+  -> A' A' B' B' X |X C| C
+  -> A' A' B' B' |X C'| C
+  -> A' A' B' B' C' |X C|
+  -> A' A' B' B' C' C'
+  -> aa bb cc (' characters are a bit redundant, but 
+               is nice to only produce terminal characters at end)
+
+
+A /grammar\ G is *context-free* if every rule of G has the form
+                  X -> w
+for some X in N
+
+A /language\ is context-free if (backwards E) context-free grammar that generates it
+
+Thm: The problem of deciding, given an unrestrictive grammar G and string w, whether 
+     G can generate w is undecidable
+     Why? B/c we can implement TMs in unrestricted grammars!
+
+
+e.g. of first TM where:
+M accepts ab, G should generate ab
+
+A1
+  -> qs |A2|
+  -> qs [|-. |-] A2
+  -> qs [|-, |-] [a, a] |A2|
+  -> qs [|-, |-] [a, a] [b, b] |A2|
+  -> qs [|-, |-] [a, a] [b, b] |A3|
+  -> qs [|-, |-] [a, a] [b, b] [e,  ] |A3|
+  -> |qs [|-, |-]| [a, a] [b, b] [e,  ]
+  -> [|-, |-] |a1 [a, a]| [b, b] [e,  ]
+  -> [|-, |-] |[a, a] q_acc| [b, b] [e,  ]
+  -> |[|-, |-] q_acc| a q_acc [b, b] [e,  ]
+  -> qacc a q_acc [b, b] [e,  ]
+  -> a |q_acc| b q_acc [e,  ]
+  -> a b |q_acc [e,  ]|
+  -> a b |q_acc| q_acc
+  -> a b |q_acc|
+  -> a b
 *)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
