@@ -6,7 +6,7 @@ Name: Philip Seger
 
 Email: philip.seger@students.olin.edu
 
-Remarks, if any:
+Remarks, if any: Sorry for the delay.
 
 *)
 
@@ -132,29 +132,55 @@ let rec pairs xs ys =
 (* QUESTION 1 *)
 
 
-let triples xs ys zs = failwith "triples not implemented"
+let triples xs ys zs = 
+  List.fold_right (fun (x, y) r -> (List.map (fun z -> (x, y, z)) zs)@r) (pairs xs ys) []
 
 
-let quads xs ys zs ws = failwith "quads not implemented"
+let quads xs ys zs ws = 
+  List.fold_right (fun (x, y, z) r -> (List.map (fun a -> (x, y, z, a)) ws)@r) (triples xs ys zs) []
 
 
-let range n = failwith "range not implemented"
+let rec range n = 
+  if n < 0 then
+    []
+  else
+    n::range(n - 1)
 
 
 
 (* QUESTION 2 *)
 
 
-let transformStates states f = failwith "transformStates not implemented"
+let transformStates states f = 
+  List.map (fun state -> f state) states
 
 
-let find_original states f target = failwith "find_original not implemented"
+let rec find_original states f target = 
+  match states with [] -> failwith "cannot find original value"
+                  | fst::rst -> if (target = f fst) then
+                                  fst
+                                else
+                                  find_original rst f target
+
 
   
-let transformDelta states delta f = failwith "transformDelta not implemented"
+let transformDelta states delta f = 
+  fun (p, a) ->
+    let (x, y, z) = delta ((find_original states f p), a) in (f x, y, z)
 
   
-let transform m f = failwith "transform not implemented"
+let transform m f = 
+  {
+    states = transformStates m.states f;
+    input_alphabet = m.input_alphabet;
+    tape_alphabet = m.tape_alphabet;
+    blank = m.blank;
+    left_marker = m.left_marker;
+    start = f m.start;
+    accept = f m.accept;
+    reject = f m.reject;
+    delta = transformDelta m.states m.delta f
+  }
 
 
 
