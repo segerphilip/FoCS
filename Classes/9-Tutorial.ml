@@ -110,7 +110,8 @@ let rec sumFact (xs) = match xs with [] -> 0
                               | x::xs' -> fact(x) + sumFact(xs')
 
 T _sumFact (0) = 1
-T _sumFact (n) = 2 + T _sumFact (n - 1) + T _fact (n - 1) ... = 
+T _sumFact (n) = 2 + T _sumFact (n - 1) + T _fact (n) ... = 
+                                            |->this contributes to time non-trivially
 
 
 let rec append (xs, ys) = match xs with [] -> ys
@@ -118,7 +119,31 @@ let rec append (xs, ys) = match xs with [] -> ys
 
 T _append (0, m) = 1
 T _append (n, m) = 2 + T _append (n - 1, m) = 2n + 1 ~> O(n) where n is size of first list
- so input order matters, especially for []
+ so input order matters, especially for []               |supposed to be O(n^2), but I messed up
+
+let reverse xs = match xs with [] -> []
+                             | x::xs' -> append(reverse(xs'), [x]) 
+
+T _reverse (0) = 1
+T _reverse (n) = 2 + T _reverse (n - 1) + append (n - 1, 1)
+               = 2 + T _reverse (n - 1) + 2n - 2 + 1
+               = 1 + 2n + T _reverse (n - 1)
+               = 1 + 2n + 1 + 2(n - 1) + 1 + 2(n - 2) + ...
+               = n + 2(n + (n - 1) + (n - 2) + (...)) + 1
+               = n + n(n - 1) + 1
+               = n^2 + 1
+
+
+let fast_reverse xs =
+  let rec loop xs result = match xs with [] -> result
+                                       | x::xs' -> loop xs' (x::result)
+
+loop xs []
+
+T _fast_reverse (n) = T _loop (n, 0)
+     T _loop (0, m) = 1
+     T _loop (n, m) = 1 + 1 + T _loop (n - 1, m + 1)
+                    = 2n + 1 ~> O(n)
 *)
 
 
