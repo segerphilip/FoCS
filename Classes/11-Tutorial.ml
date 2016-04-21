@@ -105,4 +105,6 @@ Trees as data structures:
 
   Approach 2: binary search tree
 
+
+  check out AVL trees, they are pretty cool
 *)
