@@ -2,9 +2,9 @@
 
 HOMEWORK 9
 
-Name: 
+Name: Philip Seger
 
-Email:
+Email: philip.seger@students.olin.edu
 
 Remarks, if any:
 
@@ -160,12 +160,13 @@ let s_b = tag "b"
  * 
  *)
 
-let scale n s = failwith "not implemented"
+let scale n s = map (fun x -> n*x) s
 
-let mult s1 s2 = failwith "not implemented"
+let mult s1 s2 = map (fun (x, y) -> x*y) (zip s1 s2)
 
-let unzip s = failwith "not implemented"
+let unzip s = ((map (fun (x, y) -> x) s), (map (fun (x, y) -> y) s))
 
+(* This is rough *)
 let rec fold f init_s s = failwith "not implemented"
 
 let running_max s = failwith "not implemented"
@@ -178,6 +179,14 @@ let rec stutter s = failwith "not implemented"
  * QUESTION 2
  * 
  *)
+
+(* Helpful functions *)
+let scalef n s = map (fun x -> n*.x) s
+
+let addf s = 
+
+let psumsf s = failwith "float stream -> float stream"
+
 
 let rec arctan z = failwith "not implemented"
 
